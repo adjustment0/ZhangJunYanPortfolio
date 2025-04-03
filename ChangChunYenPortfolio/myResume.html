@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 顏色動畫 */
+        @keyframes colorChange {
+            0% {
+                background: linear-gradient(45deg, #3498db, #e74c3c);
+            }
+            25% {
+                background: linear-gradient(45deg, #2ecc71, #f1c40f);
+            }
+            50% {
+                background: linear-gradient(45deg, #9b59b6, #34495e);
+            }
+            75% {
+                background: linear-gradient(45deg, #1abc9c, #e67e22);
+            }
+            100% {
+                background: linear-gradient(45deg, #3498db, #e74c3c);
+            }
+        }
+
+        /* 去除 body 的默認邊距 */
+        body {
+            margin: 0;
+            padding: 0;
+            /* 应用动画 */
+            animation: colorChange 10s infinite;
+            overflow-x: hidden; /* 防止出現横向滾動 */
+        }
+
+        /* 内容區域樣式 */
+        .content {
+            position: relative;
+            z-index: 1;
+            /* 修改為 auto 讓內容自然撐開高度 */
+            min-height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem;
+        }
+
+        /* 履歷表樣式 */
+        .resume-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            overflow: hidden; /* 防止影片超出履歷表 */
+        }
+
+        /* 影片背景樣式 */
+        #video-background {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* 讓影片完整出現在履歷表内 */
+            z-index: -1;
+            /* 添加模糊效果 */
+            filter: blur(5px);
+        }
+
+        /* 個人信息 */
+        .personal-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .personal-info img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        /* 板塊通用模式 */
+        .section {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* 煙花特效 */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: firework 1s ease-out forwards;
+        }
+
+        @keyframes firework {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(10);
+                opacity: 0;
+            }
+        }
+
+        /* 煙花樣式 */
+        .firework-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            z-index: 0;
+        }
+    </style>
+    <link rel="icon" href="photo/icon.png">
+    <title>個人履歷表</title>
+</head>
+
+<body>
+    <div class="firework-container" id="firework-container"></div>
+    <div class="content">
+        <div class="resume-container">
+            <!-- 影片背景 -->
+            <video autoplay muted loop id="video-background">
+                <source src="photo/蒙版.mp4" type="video/mp4">
+                抱歉，您的瀏覽器不支援此影片。
+            </video>
+            <!-- 個人信息 -->
+            <div class="personal-info">
+                <img src="photo/大頭照.webp" alt="個人照片">
+                <h1 class="text-3xl font-bold">張俊彥</h1>
+                <p class="text-lg">技術員</p>
+            </div>
+
+            <!-- 基本資料 -->
+            <div class="section">
+                <h2>基本資料</h2>
+                <ul>
+                    <li>聯繫方式：0965233010</li>
+                    <li>電子郵箱：a0965332528@gmail.com</li>
+                    <li>聯繫地址：台南市</li>                    
+                </ul>
+            </div>
+
+            
+            <div class="section">
+                <h2>學歷</h2>
+                <div>
+                    <h3 class="text-xl font-semibold"><a href="https://www.ksu.edu.tw/" target="_blank">崑山科技大學</a> </h3>
+                    <p>資訊管理學系 - 大學假日就讀中（2023/9 - 2027/6）</p>
+                </div>
+            </div>
+
+            
+            <div class="section">
+                <h2>工作經歷</h2>
+                <div>
+                    <h3 class="text-xl font-semibold">佑昇水泥製品股份有限公司</h3>
+                    <p>拌合機操作員（2023/4 - 2025/4）</p>
+                    <ul>
+                        <li>1.負責操作拌合機，以準確的配比製造各種規格的混凝土。</li>
+                        <li>2.定期檢查並維護設備，並及時排除可能出現的故障。</li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <div class="section">
+                <h2>專案經驗</h2>
+                <div>
+                    <h3 class="text-xl font-semibold">遊戲作品</h3>
+                    <p>遊戲開發者（2024/8）</p>
+                    <ul>
+                        <li>1.獨立開發遊戲</li>
+                        <li>2.錄製並剪輯遊戲場景片段</li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <div class="section">
+                <h2>技能專長</h2>
+                <ul>
+                    <li>Unity+C#</li>
+                    <li>Premiere Pro+After effects</li>
+                </ul>
+            </div>
+
+            
+            <div class="section">
+                <h2>獲獎情況</h2>
+                <ul>
+                    <li><a href="https://www.lccnet.com.tw/lccnet/article/details/2513" target="_blank">聯成年鑑遊戲APP第一名</a>（2024/10）</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        function createFirework(x, y) {
+            const firework = document.createElement('div');
+            firework.classList.add('firework');
+            // 限制煙花位置在履歷表容器內
+            const containerRect = document.querySelector('.resume-container').getBoundingClientRect();
+            const offsetX = Math.min(Math.max(x, 0), containerRect.width);
+            const offsetY = Math.min(Math.max(y, 0), containerRect.height);
+            firework.style.left = `${offsetX}px`;
+            firework.style.top = `${offsetY}px`;
+            document.getElementById('firework-container').appendChild(firework);
+
+            setTimeout(() => {
+                firework.remove();
+            }, 1000);
+        }
+
+        const resumeContainer = document.querySelector('.resume-container');
+        const fireworkContainer = document.getElementById('firework-container');
+        const observer = new ResizeObserver((entries) => {
+            for (const entry of entries) {
+                fireworkContainer.style.height = `${entry.contentRect.height}px`;
+            }
+        });
+        observer.observe(resumeContainer);
+
+        // 減少煙花出現頻率，降低性能負擔
+        setInterval(() => {
+            const containerRect = fireworkContainer.getBoundingClientRect();
+            const x = Math.random() * containerRect.width;
+            const y = Math.random() * containerRect.height;
+            createFirework(x, y);
+        }, 300); 
+
+        // 避免不必要的回流和重繪
+        window.addEventListener('load', function() {
+            document.body.style.display = 'block';
+        });
+    </script>
+</body>
+
+</html>
+    
