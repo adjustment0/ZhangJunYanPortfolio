@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jayen Z. - Game Engineer</title>
+  <link rel="icon" href="cuteboy.png" type="cuteboy">  
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- 配置Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#4f46e5',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'fadeIn': 'fadeIn 0.5s ease-in-out',
+            'slideUp': 'slideUp 0.5s ease-out',
+            'scaleIn': 'scaleIn 0.5s ease-out',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            scaleIn: {
+              '0%': { transform: 'scale(0.95)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' },
+            }
+          }
+        },
+      }
+    }
+  </script>
+  
+  <!-- 自定義工具類 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen font-sans">
+  <!-- 主容器 -->
+  <div id="app">
+    <!-- Header / Hero Section -->
+    <header class="bg-gradient-to-r from-gray-800 to-black text-white py-16 px-6 md:px-12">
+      <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center">
+        <div class="w-32 h-32 rounded-full overflow-hidden mb-6 md:mb-0 md:mr-8 border-4 border-white shadow-lg">
+          <img src="cuteboy.png" alt="Profile" class="object-cover w-full h-full" />
+        </div>
+        <div>
+          <h1 class="text-3xl md:text-4xl font-bold">Jayen Z.</h1>
+          <p class="text-xl mt-2">Game Engineer | Video Content Creator</p>
+          <p class="mt-4 text-blue-100">Experienced in Unity, C#, and Unreal Engine 5. Turning ideas into interactive experiences.</p>
+          
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-white shadow-md sticky top-0 z-10">
+      <div class="max-w-6xl mx-auto flex justify-center space-x-6 py-4">
+        <button id="tab-about" class="px-4 py-2 rounded-md transition bg-blue-600 text-white">About Me</button>
+        <button id="tab-education" class="px-4 py-2 rounded-md transition text-gray-700 hover:bg-gray-100">Education</button>
+        <button id="tab-projects" class="px-4 py-2 rounded-md transition text-gray-700 hover:bg-gray-100">Project Experience</button>
+      </div>
+    </nav>
+
+    <!-- Content Sections -->
+    <main class="max-w-6xl mx-auto p-6 md:p-12">
+      <!-- About Section -->
+      <section id="section-about" class="animate-fadeIn">
+        <h2 class="text-2xl font-semibold mb-4">About Me</h2>
+        <p class="text-gray-700 leading-relaxed mb-6">Passionate about game development, I specialize in creating game applications using Unity, C#, and Unreal Engine 5. With strong communication skills and experience in collaborative team environments, I enjoy bringing creative ideas to life through interactive experiences.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium text-lg mb-2">Contact Info</h3>
+            <ul class="space-y-2 text-sm">
+              <li>📧 <span class="text-gray-600">zhangayan86@gmail.com</span></li>
+              <li>📍 <span class="text-gray-600">Taiwan</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-medium text-lg mb-2">Skill Set</h3>
+            <div class="flex flex-wrap gap-2 mt-2">
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Unity</span>
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">C#</span>
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Unreal Engine</span>
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">After Effects</span>
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Premiere pro</span>
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">CapCut</span>
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">UGUI</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Education Section -->
+      <section id="section-education" class="hidden animate-slideUp">
+        <h2 class="text-2xl font-semibold mb-6">Education</h2>
+        <div class="space-y-6">
+          <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border-l-4 border-blue-500">
+            <h3 class="text-xl font-bold text-blue-700">Bachelor of Science in Information Management</h3>
+            <p class="text-gray-600"><a href="https://www.ksu.edu.tw/" target="_blank">Kun Shan University</a> | 2023 - 2027</p>
+            <p class="mt-2 text-gray-700">Focused on courses such as Marketing Management, Web Design, and Database Management, building a solid foundation in both theory and practical experience.</p>
+          </div>          
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="section-projects" class="hidden animate-scaleIn">
+        <h2 class="text-2xl font-semibold mb-6">Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-2"></div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">Personal Portfolio Website</h3>
+              <p class="text-sm text-gray-500 mb-4">Built with HTML, CSS, and JavaScript.</p>
+              <p class="text-gray-700 mb-4">A responsive, from-scratch personal website designed to showcase my professional identity and technical achievements.</p>
+              <a href="https://zhangjunyan-portfolio.netlify.app/" target="_blank" class="inline-block text-blue-600 hover:underline">View Project →</a>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-2"></div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">Game Design</h3>
+              <p class="text-sm text-gray-500 mb-4">Unity + C sharp + Unreal Engine 5</p>
+              <p class="text-gray-700 mb-4">Designed and built diverse game projects with Unity (C#) and Unreal Engine 5.</p>
+              <a href="https://changchunyen.itch.io/" target="_blank" class="inline-block text-blue-600 hover:underline">View Project →</a>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-2"></div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">Video Editing</h3>
+              <p class="text-sm text-gray-500 mb-4">After Effects + Premiere</p>
+              <p class="text-gray-700 mb-4">Skilled in editing and post-production workflows with Adobe Premiere Pro (for editing) and After Effects (for motion graphics and visual effects).</p>
+              <a href="https://www.youtube.com/watch?v=hcoe7lSr4Jo" target="_blank" class="inline-block text-blue-600 hover:underline">View Project →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <p>© Jayen Z. | Web Design Portfolio </p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // 初始化頁面
+    document.addEventListener('DOMContentLoaded', function() {
+      // 獲取所有標籤頁和內容區域
+      const tabs = {
+        about: document.getElementById('tab-about'),
+        education: document.getElementById('tab-education'),
+        projects: document.getElementById('tab-projects')
+      };
+      
+      const sections = {
+        about: document.getElementById('section-about'),
+        education: document.getElementById('section-education'),
+        projects: document.getElementById('section-projects')
+      };
+      
+      // 標籤頁切換邏輯
+      function switchTab(tabName) {
+        // 更新標籤樣式
+        Object.keys(tabs).forEach(key => {
+          if (key === tabName) {
+            tabs[key].classList.add('bg-blue-600', 'text-white');
+            tabs[key].classList.remove('text-gray-700', 'hover:bg-gray-100');
+          } else {
+            tabs[key].classList.remove('bg-blue-600', 'text-white');
+            tabs[key].classList.add('text-gray-700', 'hover:bg-gray-100');
+          }
+        });
+        
+        // 顯示對應的內容區域
+        Object.keys(sections).forEach(key => {
+          if (key === tabName) {
+            sections[key].classList.remove('hidden');
+          } else {
+            sections[key].classList.add('hidden');
+          }
+        });
+      }
+      
+      // 為每個標籤添加點擊事件
+      tabs.about.addEventListener('click', () => switchTab('about'));
+      tabs.education.addEventListener('click', () => switchTab('education'));
+      tabs.projects.addEventListener('click', () => switchTab('projects'));
+    });
+  </script>
+</body>
+</html>    
