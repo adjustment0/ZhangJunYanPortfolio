@@ -21,6 +21,21 @@
     <script> document.oncontextmenu = function(){ window.event.returnValue=false; } </script><!--鎖定右鍵-->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+         /* ✅ 下拉選單改成深色 */
+        #ue5Dropdown + .dropdown-menu {
+         background-color: #000;  /* 黑色背景 */
+         }
+
+        #ue5Dropdown + .dropdown-menu .dropdown-item {
+         color: #fff;             /* 白色文字 */
+         }
+
+        #ue5Dropdown + .dropdown-menu .dropdown-item:hover {
+         background-color: #333;  /* 滑鼠移上去深灰 */
+         color: #fff;
+         }
+    </style>
   </head>
   <body>
     
@@ -34,42 +49,42 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-    <li class="nav-item">
-      <a class="nav-link" href="NewResume/NewResume.html" target="_blank">Resume</a>
-    </li>
+              <li class="nav-item">
+               <a class="nav-link" href="NewResume/NewResume.html" target="_blank">Resume</a>
+              </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="https://tw.linkedin.com/in/jayen-z-zhangjunyan?trk=profile-badge" target="_blank">LinkedIn</a>
-    </li>
+              <li class="nav-item">
+               <a class="nav-link" href="https://tw.linkedin.com/in/jayen-z-zhangjunyan?trk=profile-badge" target="_blank">LinkedIn</a>
+              </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="https://changchunyen.itch.io/" target="_blank">個人遊戲網</a>
-    </li>
+              <li class="nav-item">
+               <a class="nav-link" href="https://changchunyen.itch.io/" target="_blank">個人遊戲網</a>
+              </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="myResume.html" target="_blank">個人簡歷</a>
-    </li>
+              <li class="nav-item">
+               <a class="nav-link" href="myResume.html" target="_blank">個人簡歷</a>
+              </li>
 
-    <!-- ✅ UE5 Game Dropdown -->
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="ue5Dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        My UE5 Game
-      </a>
-      <ul class="dropdown-menu" aria-labelledby="ue5Dropdown">
-        <li>
-          <a class="dropdown-item" href="https://drive.google.com/uc?export=download&id=1rW0uiD0LnY1Qotsg9lHAFTmmkxgQ8__O" target="_blank" title="Note: Large file size">
-            Download
-          </a>
-        </li>
-      </ul>
-    </li>
+             <!-- ✅ UE5 Game Dropdown -->
+              <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" href="#" id="ue5Dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                My UE5 Game
+               </a>
+               <ul class="dropdown-menu" aria-labelledby="ue5Dropdown">
+                <li>
+                 <a class="dropdown-item" href="https://drive.google.com/uc?export=download&id=1rW0uiD0LnY1Qotsg9lHAFTmmkxgQ8__O" target="_blank" title="Note: Large file size">
+                  Download
+                 </a>
+               </li>
+               </ul>
+              </li>
 
-  </ul>
+             </ul>
 
-  <a class="nav-link active link-light text-decoration-none" aria-current="page" href="index.html">首頁</a>
-</div>
+              <a class="nav-link active link-light text-decoration-none" aria-current="page" href="index.html">首頁</a>
+           </div>
 
           </div>
         </nav>
