@@ -352,8 +352,10 @@
                     <a href="https://cyen03.artstation.com/" target="_blank" class="text-secondary me-3 text-decoration-none footer-icon">
                         <i class="fab fa-artstation fa-lg"></i>
                     </a>
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=a0965332528@gmail.com&su=來自作品集的聯絡" target="_blank" class="text-secondary text-decoration-none footer-icon">
-                        <i class="fas fa-envelope fa-lg"></i>
+                    <a href="mailto:a0965332528@gmail.com?subject=來自作品集的聯絡" 
+                      onclick="if(!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){event.preventDefault(); window.open('https://mail.google.com/mail/?view=cm&fs=1&to=a0965332528@gmail.com&su=來自作品集的聯絡','_blank');}" 
+                      class="text-secondary text-decoration-none footer-icon">
+                      <i class="fas fa-envelope fa-lg"></i>
                     </a>
                 </div>
             </div>
@@ -437,3 +439,4 @@
 
 </body>
 </html>
+
