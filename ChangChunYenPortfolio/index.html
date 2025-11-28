@@ -116,6 +116,25 @@
             color: #38bdf8 !important;
             transform: translateY(-3px); 
         }
+
+        /* === 新增 Teachable Machine 樣式 === */
+        #webcam-container canvas {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+        max-width: 100%; /* 手機版自動縮放 */
+        }
+
+        #label-container div {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 8px 15px;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            color: #38bdf8; /* 使用你的主題藍色 */
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
 </head>
 <body>
@@ -226,6 +245,125 @@
                 <div class="ratio ratio-16x9 shadow-lg rounded-3 overflow-hidden border border-secondary">
                     <iframe src="https://ayan11451-text-to-anime.hf.space" title="AI 圖片生成器" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
                 </div>
+                <div class="row justify-content-center mb-5 mt-5">
+            <div class="col-12">
+                <h3 class="border-start border-4 border-info ps-3 mb-4 text-white">
+                  <i class="fas fa-camera me-2"></i>
+                  AI 影像識別
+                </h3>
+                <div class="card shadow-lg p-4 text-center" style="background-color: #1e293b;">
+                    <p class="text-muted mb-4">這是一個使用 Google Teachable Machine 訓練的模型展示，辨別是否是人類。<br>點擊下方按鈕並允許攝影機權限即可開始。</p>
+                    <div class="mb-3">
+                        <button id="startBtn" type="button" class="btn btn-outline-info rounded-pill px-4 py-2 mx-1" onclick="init()">
+                            <i class="fas fa-play me-2"></i>啟動辨識 (Start)
+                        </button>
+                        
+                        <button id="stopBtn" type="button" class="btn btn-outline-danger rounded-pill px-4 py-2 mx-1" onclick="stop()" disabled>
+                            <i class="fas fa-stop me-2"></i>關閉攝像機 (Stop)
+                        </button>
+                    </div>
+
+                    <div id="webcam-container" class="d-flex justify-content-center mb-3"></div>
+                    <div id="label-container" class="text-start mx-auto" style="max-width: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    
+    <script type="text/javascript">
+        // ★★★ 請將這裡換成你自己的模型網址 ★★★
+        const URL = "./my_model/"; 
+
+        let model, webcam, labelContainer, maxPredictions;
+        let isLooping = false; // 用來標記是否正在執行辨識
+
+        async function init() {
+            // 防止重複點擊：如果正在執行，就直接結束函式
+            if (isLooping) return;
+
+            // 1. 切換按鈕狀態
+            document.getElementById("startBtn").disabled = true; // 鎖定啟動按鈕
+            document.getElementById("startBtn").innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>啟動中...'; // 顯示讀取中
+            
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+
+            // 2. 載入模型 (如果還沒載入過)
+            if (!model) {
+                model = await tmImage.load(modelURL, metadataURL);
+                maxPredictions = model.getTotalClasses();
+            }
+
+            // 3. 設定攝影機
+            const flip = true; 
+            webcam = new tmImage.Webcam(300, 300, flip); 
+            await webcam.setup(); 
+            await webcam.play();
+            
+            // 標記開始執行
+            isLooping = true;
+            window.requestAnimationFrame(loop);
+
+            // 4. 更新畫面元素
+            // 先清空容器，避免重複產生 Canvas
+            document.getElementById("webcam-container").innerHTML = ""; 
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+            
+            labelContainer = document.getElementById("label-container");
+            labelContainer.innerHTML = ""; // 清空舊標籤
+            for (let i = 0; i < maxPredictions; i++) { 
+                labelContainer.appendChild(document.createElement("div"));
+            }
+
+            // 5. 按鈕狀態更新完成
+            document.getElementById("startBtn").innerHTML = '<i class="fas fa-play me-2"></i>啟動辨識 (Start)';
+            document.getElementById("stopBtn").disabled = false; // 開啟關閉按鈕
+        }
+
+        async function loop() {
+            // 只有在 isLooping 為 true 時才執行
+            if (isLooping) {
+                webcam.update(); 
+                await predict();
+                window.requestAnimationFrame(loop);
+            }
+        }
+
+        async function predict() {
+            const prediction = await model.predict(webcam.canvas);
+            for (let i = 0; i < maxPredictions; i++) {
+                const probability = (prediction[i].probability * 100).toFixed(1);
+                // 根據機率改變顏色：超過 80% 顯示亮色，否則變暗
+                const colorClass = prediction[i].probability > 0.8 ? "text-white fw-bold" : "text-secondary";
+                
+                const classPrediction = `
+                    <span class="${colorClass}">${prediction[i].className}</span> 
+                    <span class="${colorClass}">${probability}%</span>
+                `;
+                labelContainer.childNodes[i].innerHTML = classPrediction;
+            }
+        }
+
+        // === 新增：關閉攝像機函式 ===
+        async function stop() {
+            if (webcam && isLooping) {
+                // 1. 停止迴圈
+                isLooping = false;
+                
+                // 2. 停止攝像機
+                await webcam.stop();
+
+                // 3. 清除畫面上的 Canvas 與文字
+                document.getElementById("webcam-container").innerHTML = "";
+                document.getElementById("label-container").innerHTML = "";
+
+                // 4. 恢復按鈕狀態
+                document.getElementById("startBtn").disabled = false;
+                document.getElementById("stopBtn").disabled = true;
+            }
+        }
+    </script>
             </div>
         </div>
 
@@ -451,15 +589,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
