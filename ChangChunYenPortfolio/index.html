@@ -168,12 +168,17 @@
         }
 
         /* 聊天視窗 */
+        /* 聊天視窗 */
         #chat-window {
             position: absolute;
             bottom: 80px;
             right: 0;
             width: 350px;
-            height: 500px;
+            /* ★★★ 修改這裡：使用 vh (視窗高度百分比) ★★★ */
+            height: 65vh;       /* 高度佔螢幕的 65%，避免頂部被切掉 */
+            max-height: 500px;  /* 設定最大高度，避免在大螢幕上太長 */
+            min-height: 300px;  /* 設定最小高度，避免太短 */
+            /* ★★★ 修改結束 ★★★ */
             background-color: #1e293b;
             border: 1px solid #38bdf8;
             border-radius: 15px;
@@ -891,3 +896,4 @@
 
 </body>
 </html>
+
