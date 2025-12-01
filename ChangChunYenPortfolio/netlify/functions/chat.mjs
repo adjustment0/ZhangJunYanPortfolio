@@ -8,7 +8,18 @@ export default async (req, context) => {
     const body = await req.json();
     const userMessage = body.message || "你好";
 
-    // 2. 設定 AI 人設 (System Prompt)
+    // 2. 取得 API Key (改用 process.env 比較穩定)
+    const apiKey = process.env.OPENROUTER_API_KEY;
+
+    if (!apiKey) {
+      console.error("Error: API Key is missing.");
+      return new Response(JSON.stringify({ reply: "系統設定錯誤：找不到 API Key。" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    // 3. 設定 AI 人設
     const systemPrompt = `
       你現在是「張俊彥 (Jayen Z.)」個人作品集的專屬 AI 導覽員。
       
@@ -25,11 +36,11 @@ export default async (req, context) => {
       - 若訪客詢問聯絡方式，請引導至 Email: a0965332528@gmail.com。
     `;
 
-    // 3. 呼叫 OpenRouter API (使用 x-ai/grok-4.1-fast:free)
+    // 4. 呼叫 OpenRouter API
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${Netlify.env.get("OPENROUTER_API_KEY")}`,
+        "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json",
         "HTTP-Referer": "https://zhangjunyan-portfolio.netlify.app/",
         "X-Title": "Jayen Portfolio AI",
@@ -45,7 +56,9 @@ export default async (req, context) => {
     });
 
     if (!response.ok) {
-        throw new Error(`OpenRouter API Error: ${response.statusText}`);
+        const errText = await response.text();
+        console.error("OpenRouter Error:", errText);
+        throw new Error(`OpenRouter API Error: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
@@ -56,7 +69,7 @@ export default async (req, context) => {
     });
 
   } catch (error) {
-    console.error("Server Error:", error);
+    console.error("Server Function Error:", error);
     return new Response(JSON.stringify({ reply: "AI 目前連線繁忙，請稍後再試。" }), {
       status: 500,
       headers: { "Content-Type": "application/json" }
