@@ -107,7 +107,7 @@
         }
         .footer-link:hover {
             color: #38bdf8 !important; 
-            padding-left: 5px;          
+            padding-left: 5px;           
         }
         .footer-icon {
             transition: color 0.3s ease, transform 0.3s ease;
@@ -134,6 +134,188 @@
             color: #38bdf8; /* 使用你的主題藍色 */
             display: flex;
             justify-content: space-between;
+        }
+
+        /* === AI 聊天機器人樣式 (新增部分) === */
+        #ai-chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+
+        /* 聊天按鈕 */
+        #chat-toggle-btn {
+            width: 60px;
+            height: 60px;
+            background-color: #38bdf8;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f172a;
+            font-size: 24px;
+        }
+
+        #chat-toggle-btn:hover {
+            transform: scale(1.1);
+            background-color: #7dd3fc;
+        }
+
+        /* 聊天視窗 */
+        #chat-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background-color: #1e293b;
+            border: 1px solid #38bdf8;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none; /* 隱藏時不可點擊 */
+        }
+
+        #chat-window.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        /* 視窗標題 */
+        .chat-header {
+            background-color: #0f172a;
+            padding: 15px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h6 {
+            margin: 0;
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        /* 對話內容區 */
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* 訊息氣泡 */
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 12px;
+            line-height: 1.4;
+        }
+
+        .message.bot {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .message.user {
+            background-color: #38bdf8;
+            color: #0f172a;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+            font-weight: 500;
+        }
+
+        /* 輸入區 */
+        .chat-input-area {
+            padding: 10px;
+            background-color: #0f172a;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 10px;
+        }
+
+        #chat-input {
+            flex: 1;
+            background-color: #1e293b;
+            border: 1px solid #475569;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        #chat-input:focus {
+            border-color: #38bdf8;
+        }
+
+        #send-btn {
+            background-color: #38bdf8;
+            color: #0f172a;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #send-btn:hover {
+            background-color: #7dd3fc;
+        }
+
+        /* 思考中的動畫 */
+        .typing-indicator {
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            align-self: flex-start;
+            margin-bottom: 5px;
+        }
+        .dot {
+            height: 6px;
+            width: 6px;
+            background-color: #38bdf8;
+            border-radius: 50%;
+            display: inline-block;
+            animation: bounce 1.3s linear infinite;
+        }
+        .dot:nth-child(2) { animation-delay: -1.1s; }
+        .dot:nth-child(3) { animation-delay: -0.9s; }
+
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+
+        /* 手機版適配 */
+        @media (max-width: 480px) {
+            #chat-window {
+                width: 90vw;
+                height: 60vh;
+                right: -10px; /* 微調位置 */
+            }
         }
     </style>
 </head>
@@ -608,12 +790,104 @@
         </div>
     </div>
 
+    <div id="ai-chat-widget">
+        <button id="chat-toggle-btn" onclick="toggleChat()">
+            <i class="fas fa-robot"></i>
+        </button>
+
+        <div id="chat-window">
+            <div class="chat-header">
+                <h6><i class="fas fa-robot me-2"></i>Jayen's AI Assistant</h6>
+                <button type="button" class="btn-close btn-close-white" onclick="toggleChat()" aria-label="Close" style="font-size: 0.8rem;"></button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot">
+                    你好！我是俊彥的 AI 助手。關於他的作品集、技能或聯絡方式，有什麼我可以幫你的嗎？
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="輸入訊息..." onkeypress="handleKeyPress(event)">
+                <button id="send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function toggleChat() {
+            const chatWindow = document.getElementById('chat-window');
+            chatWindow.classList.toggle('active');
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const inputField = document.getElementById('chat-input');
+            const message = inputField.value.trim();
+            const messagesContainer = document.getElementById('chat-messages');
+
+            if (!message) return;
+
+            // 1. 顯示用戶訊息
+            addMessage(message, 'user');
+            inputField.value = '';
+
+            // 2. 顯示 AI 思考中動畫
+            const loadingId = addLoadingIndicator();
+
+            try {
+                // 3. 呼叫後端 API
+                const response = await fetch('/.netlify/functions/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await response.json();
+                
+                // 4. 移除思考動畫，顯示 AI 回覆
+                removeLoadingIndicator(loadingId);
+                addMessage(data.reply || "抱歉，我現在有點累，請稍後再試。", 'bot');
+
+            } catch (error) {
+                console.error("Error:", error);
+                removeLoadingIndicator(loadingId);
+                addMessage("連線發生錯誤，請檢查網路狀態。", 'bot');
+            }
+        }
+
+        function addMessage(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('message', sender);
+            msgDiv.textContent = text;
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight; // 自動捲動到底部
+        }
+
+        function addLoadingIndicator() {
+            const container = document.getElementById('chat-messages');
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'loading-' + Date.now();
+            loadingDiv.classList.add('typing-indicator');
+            loadingDiv.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+            container.appendChild(loadingDiv);
+            container.scrollTop = container.scrollHeight;
+            return loadingDiv.id;
+        }
+
+        function removeLoadingIndicator(id) {
+            const element = document.getElementById(id);
+            if (element) element.remove();
+        }
+    </script>
 
 </body>
 </html>
-
-
-
-
-
