@@ -46,7 +46,7 @@ export default async (req, context) => {
         "X-Title": "Jayen Portfolio AI",
       },
       body: JSON.stringify({
-        "model": "meta-llama/llama-3.3-70b-instruct:free", 
+        "model": "google/gemini-flash-1.5-8b:free", 
         "messages": [
           {"role": "system", "content": systemPrompt},
           {"role": "user", "content": userMessage}
@@ -76,3 +76,4 @@ export default async (req, context) => {
     });
   }
 };
+
