@@ -27,8 +27,7 @@ export default async (req, context) => {
       - 身份：崑山科大資管系學生、遊戲開發者、自媒體經營。
       - 經歷：擁有 5-6 年傳產物流經驗，目前積極轉職軟體工程師。
       - 核心技能：Unity,Unreal Engine,C#,Python,Generative AI。
-      - 影音技能：Adobe After Effects (國際證照),Premiere。
-      - 建模技能：Blender。
+      - 影音技能：Adobe After Effects (國際證照),Premiere。      
       - 作品亮點：Shadow Archer (Unity3D RPG),RUNIMON (Unity2D 跑酷),Visual Portfolio (AE),Fire Dragon VFX,IMS 庫存管理系統 (WinForms)。
       
       【你的任務】
@@ -77,6 +76,7 @@ export default async (req, context) => {
     });
   }
 };
+
 
 
 
