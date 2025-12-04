@@ -47,7 +47,7 @@ export default async (req, context) => {
         "X-Title": "Jayen Portfolio AI",
       },
       body: JSON.stringify({
-        "model": "google/gemini-2.0-flash-exp:free", 
+        "model": "google/gemini-flash-1.5-8b:free", 
         "messages": [
           {"role": "system", "content": systemPrompt},
           {"role": "user", "content": userMessage}
@@ -86,3 +86,4 @@ export default async (req, context) => {
     });
   }
 };
+
