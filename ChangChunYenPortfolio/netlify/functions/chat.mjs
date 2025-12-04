@@ -46,7 +46,7 @@ export default async (req, context) => {
         "X-Title": "Jayen Portfolio AI",
       },
       body: JSON.stringify({
-        "model": "x-ai/grok-4.1-fast:free", 
+        "model": "google/gemini-2.0-flash-exp:free", 
         "messages": [
           {"role": "system", "content": systemPrompt},
           {"role": "user", "content": userMessage}
@@ -76,3 +76,4 @@ export default async (req, context) => {
     });
   }
 };
+
