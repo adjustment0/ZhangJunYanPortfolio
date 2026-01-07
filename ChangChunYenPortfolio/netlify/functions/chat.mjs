@@ -46,7 +46,7 @@ export default async (req, context) => {
         "X-Title": "Jayen Portfolio AI",
       },
       body: JSON.stringify({
-        "model": "amazon/nova-2-lite-v1:free", 
+        "model": "xiaomi/mimo-v2-flash:free", 
         "messages": [
           {"role": "system", "content": systemPrompt},
           {"role": "user", "content": userMessage}
@@ -76,6 +76,7 @@ export default async (req, context) => {
     });
   }
 };
+
 
 
 
