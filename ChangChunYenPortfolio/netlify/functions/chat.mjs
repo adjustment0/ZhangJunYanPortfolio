@@ -46,7 +46,7 @@ export default async (req, context) => {
         "X-Title": "Jayen Portfolio AI",
       },
       body: JSON.stringify({
-        "model": "xiaomi/mimo-v2-flash:free", 
+        "model": "deepseek/deepseek-r1-0528:free", 
         "messages": [
           {"role": "system", "content": systemPrompt},
           {"role": "user", "content": userMessage}
@@ -76,6 +76,7 @@ export default async (req, context) => {
     });
   }
 };
+
 
 
 
